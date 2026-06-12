@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Calendar, MessageSquare } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { cn, formatRelativeTime } from "@/lib/utils";
 import { Avatar } from "@/components/ui/index";
 import { StatusBadge, PriorityBadge, ProjectDot } from "./status-badge";
@@ -14,7 +14,12 @@ interface TaskCardProps {
   onDragStart?: () => void;
 }
 
-export function TaskCard({ task, compact = false, draggable, onDragStart }: TaskCardProps) {
+export function TaskCard({
+  task,
+  compact = false,
+  draggable,
+  onDragStart,
+}: TaskCardProps) {
   const isOverdue =
     task.dueDate &&
     task.status !== "done" &&
@@ -30,7 +35,7 @@ export function TaskCard({ task, compact = false, draggable, onDragStart }: Task
           "rounded-lg border border-slate-200 bg-white p-3.5",
           "hover:border-indigo-300 hover:shadow-sm transition-all",
           "cursor-pointer",
-          draggable && "cursor-grab active:cursor-grabbing"
+          draggable && "cursor-grab active:cursor-grabbing",
         )}
         onClick={(e) => e.stopPropagation()}
       >
@@ -38,7 +43,7 @@ export function TaskCard({ task, compact = false, draggable, onDragStart }: Task
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-1.5 text-xs text-slate-500">
             <ProjectDot color={task.project.color} />
-            <span className="truncate max-w-[120px]">{task.project.name}</span>
+            <span className="truncate max-w-30">{task.project.name}</span>
           </div>
           <PriorityBadge priority={task.priority} showLabel={false} />
         </div>
@@ -48,7 +53,7 @@ export function TaskCard({ task, compact = false, draggable, onDragStart }: Task
           className={cn(
             "text-sm font-medium text-slate-900 leading-snug",
             task.status === "done" && "line-through text-slate-400",
-            task.status === "cancelled" && "line-through text-slate-400"
+            task.status === "cancelled" && "line-through text-slate-400",
           )}
         >
           {task.title}
@@ -65,7 +70,11 @@ export function TaskCard({ task, compact = false, draggable, onDragStart }: Task
             <div className="mt-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 {task.assignee ? (
-                  <Avatar src={task.assignee.avatar} name={task.assignee.name} size="xs" />
+                  <Avatar
+                    src={task.assignee.avatar}
+                    name={task.assignee.name}
+                    size="xs"
+                  />
                 ) : (
                   <div className="h-6 w-6 rounded-full border-2 border-dashed border-slate-200" />
                 )}
@@ -73,7 +82,7 @@ export function TaskCard({ task, compact = false, draggable, onDragStart }: Task
                   <span
                     className={cn(
                       "flex items-center gap-1 text-xs",
-                      isOverdue ? "text-red-500" : "text-slate-400"
+                      isOverdue ? "text-red-500" : "text-slate-400",
                     )}
                   >
                     <Calendar className="h-3 w-3" />
@@ -124,7 +133,8 @@ export function TaskRow({ task }: { task: TaskWithRelations }) {
       <p
         className={cn(
           "flex-1 text-sm text-slate-900 truncate",
-          (task.status === "done" || task.status === "cancelled") && "line-through text-slate-400"
+          (task.status === "done" || task.status === "cancelled") &&
+            "line-through text-slate-400",
         )}
       >
         {task.title}
@@ -139,7 +149,11 @@ export function TaskRow({ task }: { task: TaskWithRelations }) {
       {/* Assignee */}
       <div className="hidden sm:block w-8 shrink-0">
         {task.assignee ? (
-          <Avatar src={task.assignee.avatar} name={task.assignee.name} size="xs" />
+          <Avatar
+            src={task.assignee.avatar}
+            name={task.assignee.name}
+            size="xs"
+          />
         ) : (
           <div className="h-6 w-6 rounded-full border-2 border-dashed border-slate-200" />
         )}
@@ -148,7 +162,12 @@ export function TaskRow({ task }: { task: TaskWithRelations }) {
       {/* Due date */}
       <div className="hidden md:block w-24 shrink-0">
         {task.dueDate && (
-          <span className={cn("text-xs", isOverdue ? "text-red-500" : "text-slate-400")}>
+          <span
+            className={cn(
+              "text-xs",
+              isOverdue ? "text-red-500" : "text-slate-400",
+            )}
+          >
             {new Date(task.dueDate).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
