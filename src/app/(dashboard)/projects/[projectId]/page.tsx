@@ -32,7 +32,6 @@ import {
 import { TaskRow } from "@/components/tasks/task-card";
 import { formatDate, formatPercent } from "@/lib/utils";
 import type { Metadata } from "next";
-import Image from "next/image";
 
 interface Props {
   params: Promise<{ projectId: string }>;
@@ -187,15 +186,15 @@ export default async function ProjectDetailPage({ params }: Props) {
               <CardContent className="space-y-3">
                 {members.map((member) => (
                   <div key={member.id} className="flex items-center gap-2.5">
-                    {member.avatar && (
-                      <Image
-                        src={member.avatar}
-                        alt={member.name}
-                        width={28}
-                        height={28}
-                        className="rounded-full"
-                      />
-                    )}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={member.avatar}
+                      alt={member.name}
+                      width={28}
+                      height={28}
+                      className="rounded-full"
+                    />
+
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-slate-900 truncate">
                         {member.name}
