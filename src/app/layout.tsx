@@ -22,7 +22,12 @@ export const metadata: Metadata = {
   },
   description:
     "A modern project management dashboard built with Next.js App Router.",
-  authors: [{ name: "Flowspace" }],
+  authors: [{ name: "Jaspreet singh" }],
+  openGraph: {
+    title: "Flowspace",
+    description: "Project management dashboard",
+    images: ["/opengraph-image.png"],
+  },
 };
 
 export const viewport: Viewport = {
