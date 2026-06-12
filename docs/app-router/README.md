@@ -133,13 +133,13 @@ export async function POST(request: NextRequest) {
 
 ---
 
-## Middleware
+## Proxy
 
 ```typescript
-// src/middleware.ts — runs on the EDGE before every request
+// src/proxy.ts — runs before requests reach your application
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const session = request.cookies.get("session");
 
   if (!session && !request.nextUrl.pathname.startsWith("/login")) {
@@ -150,8 +150,8 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Critical: always configure matcher or middleware runs on EVERYTHING
-  // including _next/static, images, favicons — very expensive!
+  // Critical: always configure matcher or proxy runs on everything
+  // including _next/static, images, favicons, etc.
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
 ```
